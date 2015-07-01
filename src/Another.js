@@ -47,6 +47,10 @@ function Another(text, x, y, z, props) {
     this.addUIEvent('mouseenter');
     this.addUIEvent('mouseleave');
     this.addUIEvent('mousedown');
+
+    setInterval(function() {
+        console.log('Z before click', this.position.getZ())
+    }.bind(this), 1000)
 }
 
 Another.prototype = Object.create(Node.prototype);
@@ -78,10 +82,13 @@ Another.prototype.onReceive = function onReceive (type, ev) {
             this.align.halt();
             this.size.halt();
             this.scale.set(1, 1, 1);
-            this.position.setZ(2000);
-            this.align.set(0.5, 0.5,.1, {duration: 200});
+            this.position.setZ(this.z+100);
+            setInterval(function() {
+                console.log('Z', this.position.getZ())
+            }.bind(this), 1000)
+            this.align.set(0.5, 0.5,0.1, {duration: 200});
 
-            this.size.setProportional(1, 1,.1, {duration: 450, curve: 'easeOut'}, function(){
+            this.size.setProportional(1, 1,0.1, {duration: 450, curve: 'easeOut'}, function(){
 
                 this.youtubeActive = true;
                     this.youtube = this.addChild()
@@ -93,7 +100,7 @@ Another.prototype.onReceive = function onReceive (type, ev) {
                 this.youtubeEl = new DOMElement(this.youtube);
                 this.youtubeEl
                     .setContent('<iframe seamless width="560" height="315" src="https://www.youtube.com/embed/eNfBbJ0pzbA?showinfo=0&autoplay=1&iv_load_policy=3&controls=0" frameborder="0"></iframe>');
-                this.position.setZ(this.z + 2000);
+                this.position.setZ(this.z + 100);
 
             }.bind(this));
 
